@@ -1,10 +1,10 @@
-const { customError } = require("../utils/errorHandler");
+const { customError } = require("../utils/error");
 const { verifyToken } = require("../services/user");
 const messages = require("../constants/messages");
 
 module.exports = (req, _res, next) => {
   const authHeader = req.headers.authorization;
-  const isNotAuthorizedError = new Error(messages.token.invalid);
+  const isNotAuthorizedError = { message: messages.token.invalid, status: 403 };
 
   if (!authHeader) {
     return next(customError(isNotAuthorizedError));

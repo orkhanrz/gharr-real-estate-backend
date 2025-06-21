@@ -1,37 +1,37 @@
 const mongoose = require("mongoose");
-const messages = require("../constants/messages");
+const { user } = require("../constants/messages");
 const { Schema } = mongoose;
 
 const UserSchema = new Schema({
   username: {
-    required: [true, messages.username.required],
-    unique: [true, messages.username.unique],
+    required: [true, user.username.required],
+    unique: [true, user.username.unique],
     type: String
   },
   password: {
-    required: [true, messages.password.required],
+    required: [true, user.password.required],
     type: String
   },
   email: {
-    required: [true, messages.email.required],
-    unique: [true, messages.email.unique],
+    required: [true, user.email.required],
+    unique: [true, user.email.unique],
     type: String
   },
   fullName: {
-    required: [true, messages.fullName.required],
+    required: [true, user.fullName.required],
     type: String
   },
   phoneNumber: {
-    required: [true, messages.phoneNumber.required],
-    unique: [true, messages.phoneNumber.unique],
+    required: [true, user.phoneNumber.required],
+    unique: [true, user.phoneNumber.unique],
     type: String
   },
   country: {
-    required: [true, messages.country.required],
+    required: [true, user.country.required],
     type: String
   },
   type: {
-    required: [true, messages.type.required],
+    required: [true, user.type.required],
     type: String,
     enum: ["user", "agent"],
     default: "user"

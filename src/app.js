@@ -4,6 +4,7 @@ const keys = require("./configs/keys");
 const path = require("path");
 const authRoute = require("./routes/auth");
 const facilityRoute = require("./routes/facility");
+const propertyRoute = require("./routes/property");
 const { connectToDb } = require("./db/connection");
 const { errorHandler } = require("./controllers/error");
 
@@ -22,10 +23,11 @@ app.use("/assets", express.static(path.join(__dirname, "assets")));
 
 app.use("/auth", authRoute);
 app.use("/facilities", facilityRoute);
+app.use("/properties", propertyRoute);
 
 app.use(errorHandler);
 
-app.listen(PORT, HOSTNAME, () => {
+app.listen(PORT, () => {
   connectToDb();
 
   console.log(`App is running on: ${PROTOCOL}://${HOSTNAME}:${PORT}`);

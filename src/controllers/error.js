@@ -9,5 +9,5 @@ module.exports.errorHandler = (err, _req, res, _next) => {
     errObject.errors = err.errors;
   }
 
-  res.status(500).json(errObject);
+  res.status(err.status || 500).json(errObject);
 };

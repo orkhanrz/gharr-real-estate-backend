@@ -1,31 +1,62 @@
+const { property } = require("../constants/messages");
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
+
+const LocationSchema = new mongoose.Schema({
+  latitude: {
+    type: Number,
+    required: [true, "Latitude is required"]
+  },
+  longitude: {
+    type: Number,
+    required: [true, "Longitude is required"]
+  },
+  address: {
+    type: String,
+    required: [true, "Address is required"]
+  },
+  city: {
+    type: String,
+    required: [true, "City is required"]
+  },
+  country: {
+    type: String,
+    required: [true, "Country is required"]
+  }
+});
 
 const PropertySchema = new Schema({
   title: {
     type: String,
-    required: [true, "Mecburi"]
+    required: [true, property.titleRequired]
   },
   price: {
-    type: Number
+    type: Number,
+    required: [true, property.priceRequired]
   },
   imageUrl: {
-    type: String
+    type: String,
+    required: [true, property.imageUrlRequired]
   },
   category: {
-    type: String
+    type: String,
+    required: [true, property.categoryRequired]
   },
   area: {
-    type: Number
+    type: Number,
+    required: [true, property.areaRequired]
   },
   bedrooms: {
-    type: Number
+    type: Number,
+    required: [true, property.bedroomsRequired]
   },
   bathrooms: {
-    type: Number
+    type: Number,
+    required: [true, property.bathroomsRequired]
   },
   safetyRank: {
-    type: Number
+    type: Number,
+    required: [true, property.safetyRankRequired]
   },
   facilities: [
     {
@@ -41,14 +72,12 @@ const PropertySchema = new Schema({
     }
   ],
   location: {
-    required: [true, "Ünvan əlavə edilməyib."],
-    latitude: { type: Number },
-    longitude: { type: Number },
-    address: { type: String }
+    required: [true, property.location.required],
+    type: LocationSchema
   },
   agent: {
     type: mongoose.Schema.Types.ObjectId,
-    required: [true, "Satıcı əlavə edilməyib."],
+    required: [true, property.agent],
     ref: "User"
   },
   reviews: [

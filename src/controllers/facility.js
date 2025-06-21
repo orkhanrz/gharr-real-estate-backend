@@ -35,7 +35,7 @@ module.exports.deleteFacility = async (req, res, next) => {
       throw new Error("Tapılmadı!");
     }
 
-    await facility.deleteOne();
+    await facility.deleteOne({ id });
 
     res.status(200).json({ message: "Silindi!" });
   } catch (err) {
