@@ -41,7 +41,7 @@ module.exports.customError = (err) => {
 		return {
 			type: "Duplikat dəyər",
 			message: `${duplicatedField} artıq mövcuddur.`,
-      status: 400,
+			status: 400,
 			errors: [
 				{
 					path: duplicatedField,

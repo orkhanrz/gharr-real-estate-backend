@@ -28,7 +28,7 @@ app.use("/properties", propertyRoute);
 app.use(errorHandler);
 
 app.listen(PORT, () => {
-  connectToDb();
+	connectToDb();
 
-  console.log(`App is running on: ${PROTOCOL}://${HOSTNAME}:${PORT}`);
+	console.log(`App is running on: ${PROTOCOL}://${HOSTNAME}:${PORT}`);
 });

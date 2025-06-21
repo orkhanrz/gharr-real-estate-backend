@@ -4,19 +4,22 @@ const messages = require("../constants/messages");
 
 module.exports = (req, _res, next) => {
 	const authHeader = req.headers.authorization;
-	const isNotAuthorizedError = new Error(messages.token.invalid);
 
 	if (!authHeader) {
-		return next(customError(isNotAuthorizedError));
+		throw new Error(messages.token.invalid);
 	}
 
 	const token = authHeader.split(" ")[1];
 
-	const tokenIsValid = verifyToken(token);
+	try {
+		const tokenIsValid = verifyToken(token);
 
-	if (!tokenIsValid) {
-		return next(customError(isNotAuthorizedError));
+		if (!tokenIsValid) {
+			throw new Error(messages.token.invalid);
+		}
+
+		next();
+	} catch (err) {
+		next(customError(err));
 	}
-
-	next();
 };
