@@ -1,13 +1,13 @@
 module.exports.errorHandler = (err, _req, res, _next) => {
-  const errObject = { message: err.message };
+	const errObject = { message: err.message };
 
-  if (err.type) {
-    errObject.type = err.type;
-  }
+	if (err.type) {
+		errObject.type = err.type;
+	}
 
-  if (err.errors) {
-    errObject.errors = err.errors;
-  }
+	if (err.errors) {
+		errObject.errors = err.errors;
+	}
 
-  res.status(err.status || 500).json(errObject);
+	res.status(err.status || 500).json(errObject);
 };

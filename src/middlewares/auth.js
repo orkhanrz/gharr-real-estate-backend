@@ -3,20 +3,20 @@ const { verifyToken } = require("../services/user");
 const messages = require("../constants/messages");
 
 module.exports = (req, _res, next) => {
-  const authHeader = req.headers.authorization;
-  const isNotAuthorizedError = { message: messages.token.invalid, status: 403 };
+	const authHeader = req.headers.authorization;
+	const isNotAuthorizedError = new Error(messages.token.invalid);
 
-  if (!authHeader) {
-    return next(customError(isNotAuthorizedError));
-  }
+	if (!authHeader) {
+		return next(customError(isNotAuthorizedError));
+	}
 
-  const token = authHeader.split(" ")[1];
+	const token = authHeader.split(" ")[1];
 
-  const tokenIsValid = verifyToken(token);
+	const tokenIsValid = verifyToken(token);
 
-  if (!tokenIsValid) {
-    return next(customError(isNotAuthorizedError));
-  }
+	if (!tokenIsValid) {
+		return next(customError(isNotAuthorizedError));
+	}
 
-  next();
+	next();
 };

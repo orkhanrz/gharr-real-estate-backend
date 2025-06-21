@@ -1,44 +1,55 @@
 module.exports.customError = (err) => {
-  if (err.name === "ValidationError") {
-    const errors = Object.values(err.errors).map(({ path, message }) => ({
-      path,
-      message
-    }));
+	if (err.name === "ValidationError") {
+		const errors = Object.values(err.errors).map(({ path, message }) => ({
+			path,
+			message,
+		}));
 
-    return {
-      type: "Validasiya xətası",
-      message: "Validasiya xətası baş verdi.",
-      errors
-    };
-  }
+		return {
+			type: "Validasiya xətası",
+			message: "Validasiya xətası baş verdi.",
+			status: 400,
+			errors,
+		};
+	}
 
-  if (err.name === "CastError") {
-    return {
-      type: "Yanlış dəyər",
-      message: `Yanlış ${err.path}: '${err.value}' dəyəri.`,
-      errors: [
-        {
-          path: err.path,
-          message: "Uyğun olmayan dəyər verildi."
-        }
-      ]
-    };
-  }
+	if (err.name === "CastError") {
+		return {
+			type: "Yanlış dəyər",
+			message: `Yanlış ${err.path}: '${err.value}' dəyəri.`,
+			status: 400,
+			errors: [
+				{
+					path: err.path,
+					message: "Uyğun olmayan dəyər verildi.",
+				},
+			],
+		};
+	}
 
-  if (err.code === 11000) {
-    const duplicatedField = Object.keys(err.keyValue)[0];
+	if (err.name === "TokenExpiredError") {
+		return {
+			type: "Autentikasiya xətası",
+			message: "Zəhmət olmasa sistemə yenidən daxil olun.",
+			status: 401,
+		};
+	}
 
-    return {
-      type: "Duplikat dəyər",
-      message: `${duplicatedField} artıq mövcuddur.`,
-      errors: [
-        {
-          path: duplicatedField,
-          message: "Bu dəyər artıq istifadə olunub."
-        }
-      ]
-    };
-  }
+	if (err.code === 11000) {
+		const duplicatedField = Object.keys(err.keyValue)[0];
 
-  return err;
+		return {
+			type: "Duplikat dəyər",
+			message: `${duplicatedField} artıq mövcuddur.`,
+      status: 400,
+			errors: [
+				{
+					path: duplicatedField,
+					message: "Bu dəyər artıq istifadə olunub.",
+				},
+			],
+		};
+	}
+
+	return err;
 };
