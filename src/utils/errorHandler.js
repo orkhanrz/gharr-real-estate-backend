@@ -6,7 +6,7 @@ module.exports.customError = (err) => {
     }));
 
     return {
-      type: "validationError",
+      type: "Validasiya xətası",
       message: "Validasiya xətası baş verdi.",
       errors
     };
@@ -14,7 +14,7 @@ module.exports.customError = (err) => {
 
   if (err.name === "CastError") {
     return {
-      type: "castError",
+      type: "Yanlış dəyər",
       message: `Yanlış ${err.path}: '${err.value}' dəyəri.`,
       errors: [
         {
@@ -29,7 +29,7 @@ module.exports.customError = (err) => {
     const duplicatedField = Object.keys(err.keyValue)[0];
 
     return {
-      type: "duplicateKey",
+      type: "Duplikat dəyər",
       message: `${duplicatedField} artıq mövcuddur.`,
       errors: [
         {

@@ -19,11 +19,21 @@ app.use(express.json());
 app.use("/auth", authRoute);
 
 app.use((err, _req, res, _next) => {
-	res.status(500).json({ message: err.message });
+  const errObject = { message: err.message };
+
+  if (err.type) {
+    errObject.type = err.type;
+  }
+
+  if (err.errors) {
+    errObject.errors = err.errors;
+  }
+
+  res.status(500).json(errObject);
 });
 
 app.listen(PORT, () => {
-	connectToDb();
+  connectToDb();
 
-	console.log(`App is running on: ${PROTOCOL}://${HOSTNAME}:${PORT}`);
+  console.log(`App is running on: ${PROTOCOL}://${HOSTNAME}:${PORT}`);
 });
