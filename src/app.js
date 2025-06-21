@@ -1,8 +1,11 @@
 require("dotenv/config");
-const authRoute = require("./routes/auth");
-const { connectToDb } = require("./db/connection");
-const keys = require("./configs/keys");
 const cors = require("cors");
+const keys = require("./configs/keys");
+const path = require("path");
+const authRoute = require("./routes/auth");
+const facilityRoute = require("./routes/facility");
+const { connectToDb } = require("./db/connection");
+const { errorHandler } = require("./controllers/error");
 
 const ENV = process.env.ENV;
 const PROTOCOL = keys[ENV].protocol;
@@ -15,24 +18,14 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
+app.use("/assets", express.static(path.join(__dirname, "assets")));
 
 app.use("/auth", authRoute);
+app.use("/facilities", facilityRoute);
 
-app.use((err, _req, res, _next) => {
-  const errObject = { message: err.message };
+app.use(errorHandler);
 
-  if (err.type) {
-    errObject.type = err.type;
-  }
-
-  if (err.errors) {
-    errObject.errors = err.errors;
-  }
-
-  res.status(500).json(errObject);
-});
-
-app.listen(PORT, () => {
+app.listen(PORT, HOSTNAME, () => {
   connectToDb();
 
   console.log(`App is running on: ${PROTOCOL}://${HOSTNAME}:${PORT}`);

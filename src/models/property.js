@@ -1,11 +1,10 @@
 const mongoose = require("mongoose");
-const messages = require("../constants/messages");
 const { Schema } = mongoose;
 
 const PropertySchema = new Schema({
   title: {
     type: String,
-    required: [true, "Mecburid"]
+    required: [true, "Mecburi"]
   },
   price: {
     type: Number
@@ -30,8 +29,8 @@ const PropertySchema = new Schema({
   },
   facilities: [
     {
-      image: { type: String },
-      title: { type: String }
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Facility"
     }
   ],
   images: [
@@ -42,43 +41,20 @@ const PropertySchema = new Schema({
     }
   ],
   location: {
+    required: [true, "Ünvan əlavə edilməyib."],
     latitude: { type: Number },
     longitude: { type: Number },
     address: { type: String }
   },
   agent: {
-    fullName: {
-      type: String
-    },
-    image: {
-      type: String
-    },
-    email: {
-      type: String
-    },
-    phoneNumber: {
-      type: String
-    }
+    type: mongoose.Schema.Types.ObjectId,
+    required: [true, "Satıcı əlavə edilməyib."],
+    ref: "User"
   },
   reviews: [
     {
-      user: {
-        fullName: {
-          type: String
-        },
-        image: {
-          type: String
-        },
-        email: {
-          type: String
-        },
-        phoneNumber: {
-          type: String
-        }
-      },
-      text: {
-        type: String
-      }
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Review"
     }
   ]
 });

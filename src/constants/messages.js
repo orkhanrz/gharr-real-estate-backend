@@ -25,5 +25,13 @@ module.exports = {
   },
   token: {
     invalid: "Sizin bu əməliyyata imkanınız yoxdur."
+  },
+  review: {
+    textRequired: "Rəy mətni əlavə edilməyib.",
+    userRequired: "Rəy sahibi əlavə edilməyib."
+  },
+  facility: {
+    nameRequired: "Ad qeyd olunmayıb",
+    iconRequired: "İkon qeyd olunmayıb"
   }
 };
