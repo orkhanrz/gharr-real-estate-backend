@@ -17,8 +17,14 @@ const generateToken = (payload, isRefresh = false) => {
 	return token;
 };
 
-const verifyToken = (token) => {
-	const isValid = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET_KEY);
+const verifyToken = (token, isRefresh = false) => {
+	let secretKey = process.env.ACCESS_TOKEN_SECRET_KEY;
+
+	if (isRefresh) {
+		secretKey = process.env.REFRESH_TOKEN_SECRET_KEY;
+	}
+
+	const isValid = jwt.verify(token, secretKey);
 
 	return isValid;
 };

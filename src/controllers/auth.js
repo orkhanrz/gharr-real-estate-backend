@@ -8,6 +8,7 @@ const {
 	verifyToken,
 	decodeToken,
 } = require("../services/user");
+const messages = require("../constants/messages");
 
 const signIn = async (req, res, next) => {
 	const { username, password } = req.body;
@@ -60,7 +61,32 @@ const signUp = async (req, res, next) => {
 	}
 };
 
-const refreshToken = async (req, res) => {};
+const refreshToken = async (req, res, next) => {
+	const refreshToken = req.session.refreshToken;
+
+	if (!refreshToken) {
+		throw new Error(messages.token.invalid);
+	}
+
+	try {
+		const isValid = verifyToken(refreshToken, true);
+
+		if (!isValid) {
+			req.session.refreshToken = null;
+			throw new Error(messages.token.invalid);
+		}
+
+		const decodedToken = decodeToken(refreshToken);
+
+		const newToken = generateToken({ id: decodedToken.id });
+
+		console.log(newToken);
+
+		res.status(200).json({ token: newToken });
+	} catch (err) {
+		next(customError(err));
+	}
+};
 
 module.exports = {
 	signIn,

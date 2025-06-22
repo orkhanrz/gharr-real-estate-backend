@@ -13,5 +13,7 @@ module.exports.errorHandler = (err, _req, res, _next) => {
 		errObject.status = err.status;
 	}
 
+	console.log(err);
+
 	res.status(err.status || 500).json(errObject);
 };
