@@ -2,7 +2,7 @@ const { customError } = require("../utils/error");
 const { verifyToken } = require("../services/user");
 const messages = require("../constants/messages");
 
-module.exports = (req, _res, next) => {
+module.exports = (req, res, next) => {
 	const authHeader = req.headers.authorization;
 
 	if (!authHeader) {

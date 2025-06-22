@@ -27,10 +27,18 @@ module.exports.customError = (err) => {
 		};
 	}
 
+	if (err.name === "JsonWebTokenError") {
+		return {
+			type: "Imza xətası",
+			message: "Düzgün imza göndərin.",
+			status: 401,
+		};
+	}
+
 	if (err.name === "TokenExpiredError") {
 		return {
 			type: "Autentikasiya xətası",
-			message: "Zəhmət olmasa sistemə yenidən daxil olun.",
+			message: "Bu əməliyyatı aparmaq üçün sistemə daxil olmalısız.",
 			status: 401,
 		};
 	}
