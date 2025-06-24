@@ -10,8 +10,8 @@ const {
 const router = Router();
 
 router.get("/:id", auth, getSingleProperty);
-router.delete("/:id", deleteProperty);
 router.get("/", auth, getProperties);
-router.post("/", createProperty);
+router.post("/", auth, createProperty);
+router.delete("/:id", auth, deleteProperty);
 
 module.exports = router;

@@ -34,6 +34,9 @@ module.exports = {
     },
     user: {
       required: "Rəy sahibi qeyd edilməyib."
+    },
+    property: {
+      required: "Evin id-si əlavə edilməyib."
     }
   },
   facility: {

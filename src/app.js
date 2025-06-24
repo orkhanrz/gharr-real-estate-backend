@@ -7,6 +7,7 @@ const path = require("path");
 const authRoute = require("./routes/auth");
 const facilityRoute = require("./routes/facility");
 const propertyRoute = require("./routes/property");
+const userRoute = require("./routes/user");
 const { connectToDb } = require("./db/connection");
 const { errorHandler } = require("./controllers/error");
 const { notFound } = require("./controllers/not-found");
@@ -22,11 +23,11 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(
-	cookieSession({
-		name: "refreshToken",
-		secret: "cookieValidationKey",
-		maxAge: +process.env.REFRESH_TOKEN_EXPIRATION_TIME * 1000,
-	})
+  cookieSession({
+    name: "refreshToken",
+    secret: "cookieValidationKey",
+    maxAge: +process.env.REFRESH_TOKEN_EXPIRATION_TIME * 1000
+  })
 );
 app.use("/assets", express.static(path.join(__dirname, "assets")));
 
@@ -34,6 +35,7 @@ app.use("/assets", express.static(path.join(__dirname, "assets")));
 app.use("/auth", authRoute);
 app.use("/facilities", facilityRoute);
 app.use("/properties", propertyRoute);
+app.use("/user", userRoute);
 
 // Not found route
 app.use(notFound);
@@ -42,7 +44,7 @@ app.use(notFound);
 app.use(errorHandler);
 
 app.listen(PORT, () => {
-	connectToDb();
+  connectToDb();
 
-	console.log(`App is running on: ${PROTOCOL}://${HOSTNAME}:${PORT}`);
+  console.log(`App is running on: ${PROTOCOL}://${HOSTNAME}:${PORT}`);
 });

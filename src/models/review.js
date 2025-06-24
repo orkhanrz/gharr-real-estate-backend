@@ -8,6 +8,11 @@ const ReviewSchema = new Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "User"
   },
+  property: {
+    required: [true, review.property.required],
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Property"
+  },
   text: {
     required: [true, review.text.required],
     type: String
