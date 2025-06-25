@@ -27,11 +27,11 @@ module.exports.addToFavorites = async (req, res, next) => {
       return res.status(404).json({ message: "İstifadəçi tapılmadı." });
     }
 
-    const propertyIndex = user.favorites.findIndex(
-      (property) => property._id == propertyId
+    const propertyIndex = user.favorites.findIndex((id) =>
+      id.equals(propertyId)
     );
 
-    if (propertyIndex != -1) {
+    if (propertyIndex == -1) {
       user.favorites.push(propertyId);
     } else {
       user.favorites.splice(propertyIndex, 1);

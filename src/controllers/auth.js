@@ -26,10 +26,17 @@ const signIn = async (req, res, next) => {
       return res.status(401).json({ message: "Şifrə səhvdir." });
     }
 
-    const accessToken = generateToken(user);
-    req.session.refreshToken = generateToken(user, true);
+    const tokenPayload = {
+      _id: user._id,
+      username: user.username,
+      email: user.email,
+      image: user.image
+    };
 
-    return res.status(200).json({ token: accessToken });
+    const accessToken = generateToken(tokenPayload);
+    req.session.refreshToken = generateToken(tokenPayload, true);
+
+    return res.status(200).json({ token: accessToken, user: tokenPayload });
   } catch (err) {
     next(customError(err));
   }
@@ -53,10 +60,17 @@ const signUp = async (req, res, next) => {
 
     const savedUser = await newUser.save();
 
-    const accessToken = generateToken(savedUser);
-    req.session.refreshToken = generateToken(savedUser, true);
+    const tokenPayload = {
+      _id: savedUser._id,
+      username: savedUser.username,
+      email: savedUser.email,
+      image: savedUser.image
+    };
 
-    res.status(201).json({ token: accessToken });
+    const accessToken = generateToken(tokenPayload);
+    req.session.refreshToken = generateToken(tokenPayload, true);
+
+    res.status(201).json({ token: accessToken, user: tokenPayload });
   } catch (err) {
     next(customError(err));
   }
@@ -79,9 +93,16 @@ const refreshToken = async (req, res, next) => {
 
     const decodedToken = decodeToken(refreshToken);
 
-    const newToken = generateToken({ id: decodedToken.id });
+    const tokenPayload = {
+      _id: decodedToken._id,
+      username: decodedToken.username,
+      email: decodedToken.email,
+      image: decodedToken.image
+    };
 
-    res.status(200).json({ token: newToken });
+    const newToken = generateToken(tokenPayload);
+
+    res.status(200).json({ token: newToken, user: tokenPayload });
   } catch (err) {
     next(customError(err));
   }

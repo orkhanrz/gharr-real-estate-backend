@@ -42,10 +42,8 @@ const UserSchema = new Schema({
   },
   favorites: [
     {
-      property: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Property"
-      }
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Property"
     }
   ]
 });
