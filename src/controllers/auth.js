@@ -43,20 +43,26 @@ const signIn = async (req, res, next) => {
 };
 
 const signUp = async (req, res, next) => {
-  const { username, password, email, fullName, phoneNumber, country } =
+  const { username, password, email, fullName, phoneNumber, country, image } =
     req.body;
 
   const hashedPassword = await hashPassword(password, 10);
 
+  const userBody = {
+    username,
+    password: hashedPassword,
+    email,
+    fullName,
+    phoneNumber,
+    country
+  };
+
+  if (req.file) {
+    userBody.image = "uploads/" + req.file.filename;
+  }
+
   try {
-    const newUser = await User.create({
-      username,
-      password: hashedPassword,
-      email,
-      fullName,
-      phoneNumber,
-      country
-    });
+    const newUser = await User.create(userBody);
 
     const savedUser = await newUser.save();
 

@@ -57,8 +57,6 @@ module.exports.getFavorites = async (req, res, next) => {
 
     const favorites = user.favorites;
 
-    console.log(favorites);
-
     res.status(200).json(favorites);
   } catch (err) {
     next(customError(err));
